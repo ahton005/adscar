@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -15,7 +16,6 @@ allprojects {
     }
 }
 
-
 subprojects {
     group = rootProject.group
     version = rootProject.version
@@ -25,6 +25,6 @@ subprojects {
     }
 
     tasks.withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "11"
+        kotlinOptions.jvmTarget = JVM_17.target
     }
 }
