@@ -11,5 +11,11 @@ dependencies {
 }
 
 application {
-    mainClass.set("ru.otus.otuskotlin.marketplace.AppKt")
+    mainClass.set("ru.otus.otuskotlin.marketplace.MainKt")
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "ru.otus.otuskotlin.marketplace.MainKt"
+    }
 }
