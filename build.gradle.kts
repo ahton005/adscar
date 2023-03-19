@@ -5,7 +5,7 @@ plugins {
     kotlin("jvm")
 }
 
-group = "ru.zyablov.otus.otuskotlin.marketplace"
+group = "ru.zyablov.otus.otuskotlin.adscar"
 version = "1.0-SNAPSHOT"
 
 allprojects {
@@ -19,10 +19,6 @@ allprojects {
 subprojects {
     group = rootProject.group
     version = rootProject.version
-
-    repositories {
-        mavenCentral()
-    }
 
     tasks.withType<KotlinCompile> {
         kotlinOptions.jvmTarget = JVM_17.target
