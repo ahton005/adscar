@@ -78,13 +78,11 @@ AdsCar -- это площадка, на которой пользователи 
 ## Транспортные модели, API - в разработке
 
 1. [specs](specs) - описание API в форме OpenAPI-спецификаций
-2. [ok-marketplace-api-v1-jackson](ok-marketplace-api-v1-jackson) - Генерация первой версии транспортных модеелй с
+2. [ok-marketplace-api-v1-jackson](adsCar-api-v1-jackson) - Генерация первой версии транспортных модеелй с
    Jackson
-3. [ok-marketplace-api-v2-kmp](ok-marketplace-api-v2-kmp) - Генерация второй версии транспортных модеелй с KMP
-4. [ok-marketplace-common](ok-marketplace-common) - модуль с общими классами для модулей проекта. В частности, там
+3. [ok-marketplace-common](adsCar-common) - модуль с общими классами для модулей проекта. В частности, там
    располагаются внутренние модели и контекст.
-5. [ok-marketplace-mappers-v1](ok-marketplace-mappers-v1) - Мапер между внутренними моделями и моделями API v1
-6. [ok-marketplace-mappers-v2](ok-marketplace-mappers-v2) - Мапер между внутренними моделями и моделями API v1
+4. [ok-marketplace-mappers-v1](ok-marketplace-mappers-v1) - Мапер между внутренними моделями и моделями API v1
 
 ## Фреймворки и транспорты - в разработке
 
