@@ -12,7 +12,7 @@ tags:
   - name: adCar
     description: "Объявление (о покупке или продаже) автомобиля"
 paths:
-  /ad/create:
+  /v1/ad/create:
     post:
       tags:
         - adCar
@@ -32,7 +32,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AdCreateResponse'
-  /ad/read:
+  /v1/ad/read:
     post:
       tags:
         - adCar
@@ -52,7 +52,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AdReadResponse'
-  /ad/update:
+  /v1/ad/update:
     post:
       tags:
         - adCar
@@ -72,7 +72,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AdUpdateResponse'
-  /ad/delete:
+  /v1/ad/delete:
     post:
       tags:
         - adCar
@@ -93,7 +93,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/AdDeleteResponse'
 
-  /ad/search:
+  /v1/ad/search:
     post:
       tags:
         - adCar

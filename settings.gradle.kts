@@ -46,4 +46,6 @@ pluginManagement {
 include("adsCar-api-v1-jackson")
 include("adsCar-common")
 include("adsCar-mappers-v1")
-include("adsCar-app-ktor")
+include("adscar-app-ktor")
+include("adsCar-business-logic")
+include("adsCar-stubs")
