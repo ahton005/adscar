@@ -102,5 +102,6 @@ private fun InnerAd.toTransportAd() = AdResponseObject(
     description = description.takeIf { it.isNotBlank() },
     ownerId = ownerId.asString().takeIf { it.isNotBlank() },
     visibility = visibility.toTransportVisibility(),
-    permissions = permissionsClient.toTransportPermissions()
+    permissions = permissionsClient.toTransportPermissions(),
+    price = price
 )
