@@ -7,4 +7,6 @@ enum class InnerCommand {
     UPDATE,
     DELETE,
     SEARCH,
+    INIT,
+    FINISH,
 }

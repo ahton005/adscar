@@ -64,6 +64,7 @@ dependencies {
     implementation(project(":adsCar-mappers-v1"))
     implementation(project(":adsCar-common"))
     implementation(project(":adsCar-business-logic"))
+    implementation(project(":adsCar-app-common"))
 
     testImplementation(kotlin("test-junit"))
     testImplementation(ktor("test-host")) // "io.ktor:ktor-server-test-host:$ktorVersion"

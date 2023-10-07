@@ -22,15 +22,14 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import org.slf4j.event.Level
+import plugins.initAppSettings
 import routing.v1Ad
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.apiV1Mapper
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)
 
 @Suppress("unused") // Referenced in application.conf
-fun Application.moduleJvm() {
-    val processor = AdProcessor()
-
+fun Application.moduleJvm(appSettings: AppSettings = initAppSettings()) {
     install(CachingHeaders)
     install(DefaultHeaders)
     install(AutoHeadResponse)
@@ -66,7 +65,7 @@ fun Application.moduleJvm() {
                 }
             }
 
-            v1Ad(processor)
+            v1Ad(appSettings)
         }
 
         static("static") {

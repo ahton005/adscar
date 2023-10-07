@@ -4,7 +4,6 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Clock.System.now
 import mu.KotlinLogging.logger
 import org.apache.kafka.clients.consumer.Consumer
 import org.apache.kafka.clients.consumer.ConsumerRecord
@@ -22,7 +21,6 @@ private val log = logger {}
 class AppKafkaConsumer(
     consumerStrategies: List<ConsumerStrategy>,
     private val config: KafkaConfig,
-    private val processor: AdProcessor = AdProcessor(),
     private val consumer: Consumer<String, String> = config.createKafkaConsumer(),
     private val producer: Producer<String, String> = config.createKafkaProducer()
 ) {
@@ -46,13 +44,14 @@ class AppKafkaConsumer(
 
                 records.forEach { record: ConsumerRecord<String, String> ->
                     try {
-                        log.info { "process ${record.key()} from ${record.topic()}:\n${record.value()}" }
                         val (_, outputTopic, strategy) = topicsAndStrategyByInputTopic[record.topic()]
                             ?: throw RuntimeException("Receive message from unknown topic ${record.topic()}")
 
-                        val ctx = processor.exec(strategy.deserialize(record.value()).copy(timeStart = now()))
+                        val resp = config.controllerHelper(strategy.deserialize(record.value())) {
+                            strategy.serialize(this)
+                        }
 
-                        sendResponse(ctx, strategy, outputTopic)
+                        sendResponse(resp, outputTopic)
                     } catch (ex: Exception) {
                         log.error(ex) { ex.message }
                     }
@@ -74,8 +73,7 @@ class AppKafkaConsumer(
         }
     }
 
-    private fun sendResponse(context: InnerContext, strategy: ConsumerStrategy, outputTopic: String) {
-        val json = strategy.serialize(context)
+    private fun sendResponse(json: String, outputTopic: String) {
         val resRecord = ProducerRecord(
             outputTopic,
             randomUUID().toString(),

@@ -1,6 +1,6 @@
 package routing // ktlint-disable filename
 
-import AdProcessor
+import AppSettings
 import controllers.createAd
 import controllers.deleteAd
 import controllers.readAd
@@ -11,22 +11,22 @@ import io.ktor.server.routing.Route
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
 
-fun Route.v1Ad(processor: AdProcessor) {
+fun Route.v1Ad(appSettings: AppSettings) {
     route("ad") {
         post("create") {
-            call.createAd(processor)
+            call.createAd(appSettings)
         }
         post("read") {
-            call.readAd(processor)
+            call.readAd(appSettings)
         }
         post("update") {
-            call.updateAd(processor)
+            call.updateAd(appSettings)
         }
         post("delete") {
-            call.deleteAd(processor)
+            call.deleteAd(appSettings)
         }
         post("search") {
-            call.searchAd(processor)
+            call.searchAd(appSettings)
         }
     }
 }

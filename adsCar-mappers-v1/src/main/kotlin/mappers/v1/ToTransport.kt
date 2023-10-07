@@ -11,6 +11,7 @@ import models.InnerState
 import models.InnerVisibility
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdCreateResponse
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdDeleteResponse
+import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdInitResponse
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdPermissions
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdReadResponse
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdResponseObject
@@ -26,42 +27,49 @@ fun InnerContext.toTransport() = when (this.command) {
     InnerCommand.UPDATE -> toTransportUpdate()
     InnerCommand.DELETE -> toTransportDelete()
     InnerCommand.SEARCH -> toTransportSearch()
+    InnerCommand.INIT -> toTransportInit()
     else -> throw UnknownInnerCommand(command)
 }
 
 private fun InnerContext.toTransportCreate() = AdCreateResponse(
     requestId = requestId.toTransportReqId(),
-    result = if (state == InnerState.RUNNING) ResponseResult.SUCCESS else ResponseResult.ERROR,
+    result = state.toResult(),
     errors = this.errors.toTransportErrors(),
     ad = adResponse.toTransportAd()
 )
 
 private fun InnerContext.toTransportRead() = AdReadResponse(
     requestId = requestId.toTransportReqId(),
-    result = if (state == InnerState.RUNNING) ResponseResult.SUCCESS else ResponseResult.ERROR,
+    result = state.toResult(),
     errors = this.errors.toTransportErrors(),
     ad = adResponse.toTransportAd()
 )
 
 private fun InnerContext.toTransportUpdate() = AdUpdateResponse(
     requestId = requestId.toTransportReqId(),
-    result = if (state == InnerState.RUNNING) ResponseResult.SUCCESS else ResponseResult.ERROR,
+    result = state.toResult(),
     errors = this.errors.toTransportErrors(),
     ad = adResponse.toTransportAd()
 )
 
 private fun InnerContext.toTransportDelete() = AdDeleteResponse(
     requestId = requestId.toTransportReqId(),
-    result = if (state == InnerState.RUNNING) ResponseResult.SUCCESS else ResponseResult.ERROR,
+    result = state.toResult(),
     errors = this.errors.toTransportErrors(),
     ad = adResponse.toTransportAd()
 )
 
 private fun InnerContext.toTransportSearch() = AdSearchResponse(
     requestId = requestId.toTransportReqId(),
-    result = if (state == InnerState.RUNNING) ResponseResult.SUCCESS else ResponseResult.ERROR,
+    result = state.toResult(),
     errors = this.errors.toTransportErrors(),
     ads = adsResponse.toTransportAds()
+)
+
+fun InnerContext.toTransportInit() = AdInitResponse(
+    requestId = this.requestId.asString().takeIf { it.isNotBlank() },
+    result = state.toResult(),
+    errors = errors.toTransportErrors()
 )
 
 private fun InnerRequestId.toTransportReqId() = asString().takeIf { it.isNotBlank() }
@@ -105,3 +113,9 @@ private fun InnerAd.toTransportAd() = AdResponseObject(
     permissions = permissionsClient.toTransportPermissions(),
     price = price
 )
+
+private fun InnerState.toResult(): ResponseResult? = when (this) {
+    InnerState.RUNNING -> ResponseResult.SUCCESS
+    InnerState.FAILING -> ResponseResult.ERROR
+    InnerState.NONE -> null
+}
