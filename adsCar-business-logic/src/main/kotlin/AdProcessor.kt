@@ -1,6 +1,5 @@
-import ru.zyablov.otus.otuskotlin.adscar.common.InnerContext
-import ru.zyablov.otus.otuskotlin.adscar.common.models.InnerCommand.SEARCH
-import ru.zyablov.otus.otuskotlin.adscar.common.models.InnerWorkMode.STUB
+import models.InnerCommand.SEARCH
+import models.InnerWorkMode.STUB
 import stubs.AdStub
 
 class AdProcessor {

@@ -4,13 +4,13 @@ import AdProcessor
 import io.ktor.server.application.ApplicationCall
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import mappers.v1.toInnerContext
+import mappers.v1.toTransport
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdCreateRequest
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdDeleteRequest
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdReadRequest
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdSearchRequest
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdUpdateRequest
-import ru.zyablov.otus.otuskotlin.adscar.mappers.v1.toInnerContext
-import ru.zyablov.otus.otuskotlin.adscar.mappers.v1.toTransport
 
 suspend fun ApplicationCall.createAd(processor: AdProcessor) {
     val request = receive<AdCreateRequest>()

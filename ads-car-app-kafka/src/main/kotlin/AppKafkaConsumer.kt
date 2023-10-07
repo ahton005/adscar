@@ -12,7 +12,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.producer.Producer
 import org.apache.kafka.clients.producer.ProducerRecord
 import org.apache.kafka.common.errors.WakeupException
-import ru.zyablov.otus.otuskotlin.adscar.common.InnerContext
 import utils.createKafkaConsumer
 import utils.createKafkaProducer
 import java.time.Duration.ofSeconds

@@ -22,6 +22,7 @@ import io.ktor.server.routing.get
 import io.ktor.server.routing.route
 import io.ktor.server.routing.routing
 import org.slf4j.event.Level
+import routing.v1Ad
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.apiV1Mapper
 
 fun main(args: Array<String>): Unit = EngineMain.main(args)

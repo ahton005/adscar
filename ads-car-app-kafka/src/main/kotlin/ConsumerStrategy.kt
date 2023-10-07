@@ -1,10 +1,9 @@
 import configs.KafkaConfig
+import mappers.v1.toInnerContext
+import mappers.v1.toTransport
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.apiV1RequestDeserialize
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.apiV1ResponseSerialize
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.IRequest
-import ru.zyablov.otus.otuskotlin.adscar.common.InnerContext
-import ru.zyablov.otus.otuskotlin.adscar.mappers.v1.toInnerContext
-import ru.zyablov.otus.otuskotlin.adscar.mappers.v1.toTransport
 
 interface ConsumerStrategy {
     fun topics(config: KafkaConfig): InputOutputTopics
