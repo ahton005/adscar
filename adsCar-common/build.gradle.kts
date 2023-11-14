@@ -12,6 +12,8 @@ kotlin {
             dependencies {
                 implementation(kotlin("stdlib"))
 
+                implementation(project(":adsCar-logging"))
+
                 api("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
             }
         }

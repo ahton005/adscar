@@ -9,17 +9,23 @@ import models.InnerWorkMode
 import stubs.InnerStubs
 
 data class InnerContext(
-    val command: InnerCommand = InnerCommand.NONE,
-    val state: InnerState = InnerState.NONE,
-    val errors: List<InnerError> = listOf(),
+    var command: InnerCommand = InnerCommand.NONE,
+    var state: InnerState = InnerState.NONE,
+    var errors: MutableList<InnerError> = mutableListOf(),
 
-    val workMode: InnerWorkMode = InnerWorkMode.PROD,
-    val stubCase: InnerStubs = InnerStubs.NONE,
+    var workMode: InnerWorkMode = InnerWorkMode.PROD,
+    var stubCase: InnerStubs = InnerStubs.NONE,
 
-    val requestId: InnerRequestId = InnerRequestId.NONE,
-    val timeStart: Instant = Instant.NONE,
-    val adRequest: InnerAd = InnerAd(),
-    val adFilterRequest: InnerAdFilter = InnerAdFilter(),
-    val adResponse: InnerAd = InnerAd(),
-    val adsResponse: List<InnerAd> = listOf()
+    var requestId: InnerRequestId = InnerRequestId.NONE,
+    var timeStart: Instant = Instant.NONE,
+    var adRequest: InnerAd = InnerAd(),
+    var adFilterRequest: InnerAdFilter = InnerAdFilter(),
+    var adResponse: InnerAd = InnerAd(),
+    var adsResponse: MutableList<InnerAd> = mutableListOf(),
+
+    var adValidating: InnerAd = InnerAd(),
+    var adFilterValidating: InnerAdFilter = InnerAdFilter(),
+
+    var adValidated: InnerAd = InnerAd(),
+    var adFilterValidated: InnerAdFilter = InnerAdFilter()
 )

@@ -65,6 +65,9 @@ dependencies {
     implementation(project(":adsCar-common"))
     implementation(project(":adsCar-business-logic"))
     implementation(project(":adsCar-app-common"))
+    implementation(project(":adsCar-logging"))
+    implementation("com.sndyuk:logback-more-appenders:1.8.8")
+    implementation("org.fluentd:fluent-logger:0.3.4")
 
     testImplementation(kotlin("test-junit"))
     testImplementation(ktor("test-host")) // "io.ktor:ktor-server-test-host:$ktorVersion"

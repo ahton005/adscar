@@ -51,7 +51,7 @@ class KafkaControllerTest {
                         AdCreateRequest(
                             requestId = "1",
                             adCreate = AdCreateOrUpdateObject(
-                                title = "Some Ad",
+                                title = "Продается автомобиль",
                                 description = "some testing ad to check them all",
                                 visibility = OWNER_ONLY
                             ),
@@ -73,7 +73,7 @@ class KafkaControllerTest {
                         AdCreateRequest(
                             requestId = "2",
                             adCreate = AdCreateOrUpdateObject(
-                                title = "Some Ad",
+                                title = "Продается автомобиль",
                                 description = "some testing ad to check them all",
                                 visibility = OWNER_ONLY
                             ),

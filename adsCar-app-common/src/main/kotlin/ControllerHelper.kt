@@ -1,15 +1,30 @@
 import helpers.asError
 import kotlinx.datetime.Clock.System.now
 import models.InnerState.FAILING
+import kotlin.reflect.KClass
 
 suspend inline fun <T> IAppSettings.controllerHelper(
     ctx: InnerContext,
-    toResponse: InnerContext.() -> T
+    crossinline toResponse: suspend InnerContext.() -> T,
+    clazz: KClass<*>,
+    logId: String
 ): T {
+    val logger = corSettings.loggerProvider.logger(clazz)
     return try {
-        processor.exec(ctx.copy(timeStart = now())).toResponse()
+        logger.doWithLogging(logId) {
+            processor.exec(ctx.apply { timeStart = now() })
+            logger.info(
+                msg = "Req $logId processed for ${clazz.simpleName}",
+                marker = "BIZ",
+                data = ctx.toLog(logId)
+            )
+            ctx.toResponse()
+        }
     } catch (e: Throwable) {
-        val newCtx = ctx.copy(state = FAILING, errors = ctx.errors + e.asError())
-        processor.exec(newCtx).toResponse()
+        logger.doWithLogging("$logId-failure") {
+            ctx.apply { state = FAILING; errors.add(e.asError()) }
+            processor.exec(ctx)
+            ctx.toResponse()
+        }
     }
 }

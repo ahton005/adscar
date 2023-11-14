@@ -47,10 +47,12 @@ class AppKafkaConsumer(
                         val (_, outputTopic, strategy) = topicsAndStrategyByInputTopic[record.topic()]
                             ?: throw RuntimeException("Receive message from unknown topic ${record.topic()}")
 
-                        val resp = config.controllerHelper(strategy.deserialize(record.value())) {
-                            strategy.serialize(this)
-                        }
-
+                        val resp = config.controllerHelper(
+                            strategy.deserialize(record.value()),
+                            { strategy.serialize(this) },
+                            this::class,
+                            "Kafka"
+                        )
                         sendResponse(resp, outputTopic)
                     } catch (ex: Exception) {
                         log.error(ex) { ex.message }

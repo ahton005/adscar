@@ -29,6 +29,7 @@ dependencies {
     implementation(project(":adsCar-business-logic"))
 
     implementation(project(":adsCar-app-common"))
+    implementation(project(":adsCar-logging"))
 
     testImplementation(kotlin("test-junit"))
 }
