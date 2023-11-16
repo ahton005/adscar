@@ -64,7 +64,6 @@ fun Application.moduleJvm(appSettings: AppSettings = initAppSettings()) {
                     setConfig(apiV1Mapper.deserializationConfig)
                 }
             }
-
             v1Ad(appSettings)
         }
 

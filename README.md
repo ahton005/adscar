@@ -68,56 +68,40 @@ AdsCar -- это площадка, на которой пользователи 
 ## Подпроекты для занятий по языку Kotlin
 
 1. [m1l1-hello-world](m1l1-hello-world) - Вводное занятие, создание первой программы на Kotlin
-3. [m1l3-oop](m1l3-oop) - Объектно-ориентированное программирование
+2. [m1l3-oop](m1l3-oop) - Объектно-ориентированное программирование
 3. [m1l4-dsl](m1l4-dsl) - Предметно ориентированные языки (DSL)
 4. [m1l5-coroutines](m1l5-coroutines) - Асинхронное и многопоточное программирование с корутинами
-4. [m1l6-flows-and-channels](m1l6-flows-and-channels) - Асинхронное и многопоточное программирование с Flow и каналами
-5. [m1l7-kmp](m1l7-kmp) - Kotlin Multiplatform и интероперабельность с JVM, JS
-6. [m2l2-testing](m2l2-testing) - Тестирование проекта, TDD, MDD
+5. [m1l6-flows-and-channels](m1l6-flows-and-channels) - Асинхронное и многопоточное программирование с Flow и каналами
+6. [m1l7-kmp](m1l7-kmp) - Kotlin Multiplatform и интероперабельность с JVM, JS
+7. [m2l2-testing](m2l2-testing) - Тестирование проекта, TDD, MDD
 
 ## Транспортные модели, API - в разработке
 
 1. [specs](specs) - описание API в форме OpenAPI-спецификаций
-2. [ok-marketplace-api-v1-jackson](adsCar-api-v1-jackson) - Генерация первой версии транспортных модеелй с
-   Jackson
-3. [ok-marketplace-common](adsCar-common) - модуль с общими классами для модулей проекта. В частности, там
+2. [adsCar-api-v1-jackson](adsCar-api-v1-jackson) - Генерация первой версии транспортных моделей с Jackson
+3. [adsCar-common](adsCar-common) - модуль с общими классами для модулей проекта. В частности, там
    располагаются внутренние модели и контекст.
-4. [ok-marketplace-mappers-v1](ok-marketplace-mappers-v1) - Мапер между внутренними моделями и моделями API v1
+4. [adsCar-mappers-v1](adsCar-mappers-v1) - Маперы между внутренними моделями и моделями API
+5. [adsCar-log-models](adsCar-log-models) - Генерация моделей логирования
+6. [adsCar-mappers-log](adsCar-mappers-log) - Мапер между внутренними моделями и моделями логирования
 
 ## Фреймворки и транспорты - в разработке
 
-[//]: # (1. [ok-marketplace-services]&#40;ok-marketplace-services&#41; - Сервис. Служит оберткой для модуля бизнес-логики. Подключается)
+1. [adsCar-app-ktor](adscar-app-ktor) - Приложение на Ktor JVM
+2. [ads-car-app-kafka](ads-car-app-kafka) - Микросервис на Kafka
 
-[//]: # (   всеми фреймворками &#40;модулями `*-app-*`&#41;)
+## Мониторинг и логирование
 
-[//]: # (1. [ok-marketplace-app-spring]&#40;ok-marketplace-app-spring&#41; - Приложение на Spring Framework)
-
-[//]: # (1. [ok-marketplace-app-ktor]&#40;ok-marketplace-app-ktor&#41; - Приложение на Ktor JVM)
-
-[//]: # (1. [ok-marketplace-app-ktor-native]&#40;ok-marketplace-app-ktor-native&#41; - Приложение на Ktor Native)
-
-[//]: # (1. [ok-marketplace-app-ktor-common]&#40;ok-marketplace-app-ktor-common&#41; - Общая логика для Ktor JVM и Ktor Native)
-
-[//]: # (1. [ok-marketplace-app-knative]&#40;ok-marketplace-app-knative&#41; - Скрипты запуска приложения в KNative)
-
-[//]: # (1. [ok-marketplace-app-rabbit]&#40;ok-marketplace-app-rabbit&#41; - Микросервис на RabbitMQ)
-
-[//]: # (1. [ok-marketplace-app-kafka]&#40;ok-marketplace-app-kafka&#41; - Микросервис на Kafka)
+1. [deploy](deploy) - Инструменты мониторинга и деплоя
+2. [adsCar-logging](adsCar-logging) - Библиотека логирования на базе библиотеки Logback
 
 ## Модули бизнес-логики - в разработке
 
-[//]: # (1. [ok-marketplace-stubs]&#40;ok-marketplace-stubs&#41; - Стабы для ответов сервиса)
-
-[//]: # (1. [ok-marketplace-biz]&#40;ok-marketplace-biz&#41; - Модуль бизнес-логики приложения)
+1. [adsCar-stubs](adsCar-stubs) - Стабы для ответов сервиса
+2. [app-lib-cor](app-lib-cor) - Библиотека цепочки обязанностей для бизнес-логики
+3. [adsCar-business-logic](adsCar-business-logic) - Модуль бизнес-логики приложения
 
 ## Хранение, репозитории, базы данных - в разработке
 
-[//]: # (1. [ok-marketplace-repo-test]&#40;ok-marketplace-repo-test&#41; - Базовые тесты для репозиториев всех баз данных)
-
-[//]: # (2. [ok-marketplace-repo-inmemory]&#40;ok-marketplace-repo-inmemory&#41; - Репозиторий на базе кэша в памяти для тестирования)
-
-[//]: # (3. [ok-marketplace-repo-sql]&#40;ok-marketplace-repo-sql&#41; - Репозиторий на базе PostgreSQL)
-
-[//]: # (4. [ok-marketplace-repo-cassandra]&#40;ok-marketplace-repo-cassandra&#41; - Репозиторий на базе Cassandra)
-
-[//]: # (5. [ok-marketplace-repo-gremlin]&#40;ok-marketplace-repo-gremlin&#41; - Репозиторий на базе Apache TinkerPop Gremlin и ArcadeDb)
+1. [app-repo-tests](app-repo-tests) - Базовые тесты для репозиториев всех баз данных
+2. [app-repo-in-memory](app-repo-in-memory) - Репозиторий на базе кэша в памяти для тестирования

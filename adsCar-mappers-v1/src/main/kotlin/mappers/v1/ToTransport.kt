@@ -3,6 +3,7 @@ package mappers.v1
 import InnerContext
 import mappers.v1.exceptions.UnknownInnerCommand
 import models.InnerAd
+import models.InnerAdLock
 import models.InnerAdPermissionClient
 import models.InnerCommand
 import models.InnerError
@@ -111,7 +112,8 @@ private fun InnerAd.toTransportAd() = AdResponseObject(
     ownerId = ownerId.asString().takeIf { it.isNotBlank() },
     visibility = visibility.toTransportVisibility(),
     permissions = permissionsClient.toTransportPermissions(),
-    price = price
+    price = price,
+    lock = lock.takeIf { InnerAdLock.NONE != it }?.asString()
 )
 
 private fun InnerState.toResult(): ResponseResult? = when (this) {

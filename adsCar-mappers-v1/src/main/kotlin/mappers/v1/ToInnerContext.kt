@@ -5,6 +5,7 @@ import mappers.v1.exceptions.UnknownRequestClass
 import models.InnerAd
 import models.InnerAdFilter
 import models.InnerAdId
+import models.InnerAdLock
 import models.InnerCommand.CREATE
 import models.InnerCommand.DELETE
 import models.InnerCommand.READ
@@ -15,7 +16,9 @@ import models.InnerVisibility
 import models.InnerWorkMode
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdCreateOrUpdateObject
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdCreateRequest
+import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdDeleteObject
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdDeleteRequest
+import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdReadObject
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdReadRequest
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdRequestDebug
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdRequestDebugMode
@@ -63,16 +66,21 @@ private fun AdVisibility?.toInner() = when (this) {
     null -> InnerVisibility.NONE
 }
 
-private fun String?.toAdWithId() = InnerAd(id = this.toAdId())
+private fun AdDeleteObject?.toInner() = InnerAd(id = this?.id.toAdId(), lock = this?.lock.toInnerLock())
+private fun AdReadObject?.toInner() = InnerAd(id = this?.id.toAdId())
 
 private fun String?.toAdId() = this?.let { InnerAdId(it) } ?: InnerAdId.NONE
 
+private fun String?.toInnerLock() = this?.let { InnerAdLock(it) } ?: InnerAdLock.NONE
+
 private fun AdCreateOrUpdateObject?.toInnerAd() = InnerAd(
+    id = this?.id?.let { InnerAdId(it) } ?: InnerAdId.NONE,
     title = this?.title ?: "",
     description = this?.description ?: "",
     logos = this?.logos ?: listOf(),
     visibility = this?.visibility.toInner(),
-    price = this?.price ?: ZERO
+    price = this?.price ?: ZERO,
+    lock = this?.lock.toInnerLock()
 )
 
 private fun AdSearchFilter?.toInnerSearchFilter() =
@@ -89,7 +97,7 @@ private fun AdCreateRequest.toInner() = InnerContext(
 private fun AdReadRequest.toInner() = InnerContext(
     command = READ,
     requestId = requestId?.let { InnerRequestId(it) } ?: InnerRequestId.NONE,
-    adRequest = adRead?.id.toAdWithId(),
+    adRequest = adRead.toInner(),
     workMode = debug.toInnerMode(),
     stubCase = debug.toInnerStub()
 )
@@ -105,7 +113,7 @@ private fun AdUpdateRequest.toInner() = InnerContext(
 private fun AdDeleteRequest.toInner() = InnerContext(
     command = DELETE,
     requestId = requestId?.let { InnerRequestId(it) } ?: InnerRequestId.NONE,
-    adRequest = adDelete?.id.toAdWithId(),
+    adRequest = adDelete.toInner(),
     workMode = debug.toInnerMode(),
     stubCase = debug.toInnerStub()
 )

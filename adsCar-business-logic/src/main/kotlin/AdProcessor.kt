@@ -1,13 +1,17 @@
 import groups.operation
 import groups.stubs
 import models.InnerAdId
+import models.InnerAdLock
 import models.InnerCommand
+import models.InnerState
 import validation.finishAdFilterValidation
 import validation.finishAdValidation
 import validation.validateDescriptionHasContent
 import validation.validateDescriptionNotEmpty
 import validation.validateIdNotEmpty
 import validation.validateIdProperFormat
+import validation.validateLockNotEmpty
+import validation.validateLockProperFormat
 import validation.validateTitleHasContent
 import validation.validateTitleNotEmpty
 import validation.validation
@@ -27,11 +31,12 @@ class AdProcessor(
     @Suppress("unused")
     private val corSettings: MkplCorSettings = MkplCorSettings.NONE
 ) {
-    suspend fun exec(ctx: InnerContext) = BusinessChain.exec(ctx)
+    suspend fun exec(ctx: InnerContext) = BusinessChain.exec(ctx.apply { settings = corSettings })
 
     companion object {
         private val BusinessChain = rootChain {
             initStatus("Инициализация статуса")
+            initRepo("Инициализация репозитория")
 
             operation("Создание объявления", InnerCommand.CREATE) {
                 stubs("Обработка стабов") {
@@ -53,6 +58,12 @@ class AdProcessor(
 
                     finishAdValidation("Завершение проверок")
                 }
+                chain {
+                    title = "Логика сохранения"
+                    repoPrepareCreate("Подготовка объекта для сохранения")
+                    repoCreate("Создание объявления в БД")
+                }
+                prepareResult("Подготовка ответа")
             }
             operation("Получить объявление", InnerCommand.READ) {
                 stubs("Обработка стабов") {
@@ -69,6 +80,16 @@ class AdProcessor(
 
                     finishAdValidation("Успешное завершение процедуры валидации")
                 }
+                chain {
+                    title = "Логика чтения"
+                    repoRead("Чтение объявления из БД")
+                    worker {
+                        title = "Подготовка ответа для Read"
+                        on { state == InnerState.RUNNING }
+                        handle { adRepoDone = adRepoRead }
+                    }
+                }
+                prepareResult("Подготовка ответа")
             }
             operation("Изменить объявление", InnerCommand.UPDATE) {
                 stubs("Обработка стабов") {
@@ -82,10 +103,13 @@ class AdProcessor(
                 validation {
                     worker("Копируем поля в adValidating") { adValidating = adRequest.deepCopy() }
                     worker("Очистка id") { adValidating.id = InnerAdId(adValidating.id.asString().trim()) }
+                    worker("Очистка lock") { adValidating.lock = InnerAdLock(adValidating.lock.asString().trim()) }
                     worker("Очистка заголовка") { adValidating.title = adValidating.title.trim() }
                     worker("Очистка описания") { adValidating.description = adValidating.description.trim() }
                     validateIdNotEmpty("Проверка на непустой id")
                     validateIdProperFormat("Проверка формата id")
+                    validateLockNotEmpty("Проверка на непустой lock")
+                    validateLockProperFormat("Проверка формата lock")
                     validateTitleNotEmpty("Проверка на непустой заголовок")
                     validateTitleHasContent("Проверка на наличие содержания в заголовке")
                     validateDescriptionNotEmpty("Проверка на непустое описание")
@@ -93,6 +117,13 @@ class AdProcessor(
 
                     finishAdValidation("Успешное завершение процедуры валидации")
                 }
+                chain {
+                    title = "Логика сохранения"
+                    repoRead("Чтение объявления из БД")
+                    repoPrepareUpdate("Подготовка объекта для обновления")
+                    repoUpdate("Обновление объявления в БД")
+                }
+                prepareResult("Подготовка ответа")
             }
             operation("Удалить объявление", InnerCommand.DELETE) {
                 stubs("Обработка стабов") {
@@ -102,14 +133,23 @@ class AdProcessor(
                     stubNoCase("Ошибка: запрошенный стаб недопустим")
                 }
                 validation {
-                    worker("Копируем поля в adValidating") {
-                        adValidating = adRequest.deepCopy()
-                    }
+                    worker("Копируем поля в adValidating") { adValidating = adRequest.deepCopy() }
                     worker("Очистка id") { adValidating.id = InnerAdId(adValidating.id.asString().trim()) }
+                    worker("Очистка lock") { adValidating.lock = InnerAdLock(adValidating.lock.asString().trim()) }
+
                     validateIdNotEmpty("Проверка на непустой id")
                     validateIdProperFormat("Проверка формата id")
+                    validateLockNotEmpty("Проверка на непустой lock")
+                    validateLockProperFormat("Проверка формата lock")
                     finishAdValidation("Успешное завершение процедуры валидации")
                 }
+                chain {
+                    title = "Логика удаления"
+                    repoRead("Чтение объявления из БД")
+                    repoPrepareDelete("Подготовка объекта для удаления")
+                    repoDelete("Удаление объявления из БД")
+                }
+                prepareResult("Подготовка ответа")
             }
             operation("Поиск объявлений", InnerCommand.SEARCH) {
                 stubs("Обработка стабов") {
@@ -123,6 +163,8 @@ class AdProcessor(
 
                     finishAdFilterValidation("Успешное завершение процедуры валидации")
                 }
+                repoSearch("Поиск объявления в БД по фильтру")
+                prepareResult("Подготовка ответа")
             }
         }.build()
     }

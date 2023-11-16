@@ -1,3 +1,4 @@
+import org.gradle.api.file.DuplicatesStrategy.EXCLUDE
 import org.jetbrains.kotlin.util.suffixIfNot
 
 val ktorVersion: String by project
@@ -58,6 +59,8 @@ dependencies {
     implementation(ktor("auth")) // "io.ktor:ktor-auth:$ktorVersion"
     implementation(ktor("auth-jwt")) // "io.ktor:ktor-auth-jwt:$ktorVersion"
 
+    implementation(ktor("config-yaml"))
+
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
 
     implementation(project(":adsCar-api-v1-jackson"))
@@ -65,16 +68,30 @@ dependencies {
     implementation(project(":adsCar-common"))
     implementation(project(":adsCar-business-logic"))
     implementation(project(":adsCar-app-common"))
+
+    implementation(project(":adsCar-stubs"))
+
     implementation(project(":adsCar-logging"))
+    implementation(project(":adsCar-mappers-log"))
+    implementation(project(":adsCar-log-models"))
+
+    implementation(project(":app-repo-in-memory"))
+    implementation(project(":app-repo-cassandra"))
+    implementation(project(":app-repo-stubs"))
+
     implementation("com.sndyuk:logback-more-appenders:1.8.8")
     implementation("org.fluentd:fluent-logger:0.3.4")
+
+    implementation("org.testcontainers:cassandra:1.19.3")
 
     testImplementation(kotlin("test-junit"))
     testImplementation(ktor("test-host")) // "io.ktor:ktor-server-test-host:$ktorVersion"
     testImplementation(ktor("content-negotiation", prefix = "client-"))
     testImplementation(ktor("websockets", prefix = "client-"))
+
+    testImplementation(project(":app-repo-tests"))
 }
 
 tasks.withType<Copy> {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    duplicatesStrategy = EXCLUDE
 }
