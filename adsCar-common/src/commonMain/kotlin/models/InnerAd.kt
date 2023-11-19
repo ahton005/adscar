@@ -4,12 +4,16 @@ import java.math.BigDecimal
 import java.math.BigDecimal.ZERO
 
 data class InnerAd(
-    val id: InnerAdId = InnerAdId.NONE,
-    val title: String = "",
-    val description: String = "",
-    val visibility: InnerVisibility = InnerVisibility.NONE,
-    val logos: List<String> = listOf(),
-    val ownerId: InnerUserId = InnerUserId.NONE,
-    val price: BigDecimal = ZERO,
-    val permissionsClient: Set<InnerAdPermissionClient> = setOf()
-)
+    var id: InnerAdId = InnerAdId.NONE,
+    var title: String = "",
+    var description: String = "",
+    var visibility: InnerVisibility = InnerVisibility.NONE,
+    var logos: List<String> = listOf(),
+    var ownerId: InnerUserId = InnerUserId.NONE,
+    var price: BigDecimal = ZERO,
+    var permissionsClient: Set<InnerAdPermissionClient> = setOf()
+) {
+    fun deepCopy(): InnerAd = copy(
+        permissionsClient = permissionsClient.toMutableSet()
+    )
+}

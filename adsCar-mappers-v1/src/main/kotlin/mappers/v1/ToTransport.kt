@@ -116,6 +116,7 @@ private fun InnerAd.toTransportAd() = AdResponseObject(
 
 private fun InnerState.toResult(): ResponseResult? = when (this) {
     InnerState.RUNNING -> ResponseResult.SUCCESS
+    InnerState.FINISHING -> ResponseResult.SUCCESS
     InnerState.FAILING -> ResponseResult.ERROR
     InnerState.NONE -> null
 }

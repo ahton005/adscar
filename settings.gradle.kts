@@ -43,11 +43,21 @@ pluginManagement {
 // include("m1l6-flows-and-channels")
 // include("m1l7-kmp")
 // include("m2l2-testing")
+
 include("adsCar-api-v1-jackson")
-include("adsCar-common")
 include("adsCar-mappers-v1")
-include("adscar-app-ktor")
-include("adsCar-business-logic")
+include("adsCar-common")
+
 include("adsCar-stubs")
+
+include("adsCar-business-logic")
+include("app-lib-cor")
+
+include("adscar-app-ktor")
 include("ads-car-app-kafka")
+
 include("adsCar-app-common")
+
+include("adsCar-logging")
+include("adsCar-log-models")
+include("adsCar-mappers-log")

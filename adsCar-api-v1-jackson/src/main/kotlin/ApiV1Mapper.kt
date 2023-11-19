@@ -1,7 +1,7 @@
 package ru.zyablov.otus.otuskotlin.adscar.api.v1
 
 import com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
-import com.fasterxml.jackson.databind.MapperFeature
+import com.fasterxml.jackson.databind.MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL
 import com.fasterxml.jackson.databind.json.JsonMapper
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.IRequest
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.IResponse
@@ -9,9 +9,7 @@ import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.IResponse
 val apiV1Mapper: JsonMapper = JsonMapper
     .builder()
     .configure(FAIL_ON_UNKNOWN_PROPERTIES, false)
-    .configure(MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL, true)
-    .enable(MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL)
-    .enable(MapperFeature.USE_BASE_TYPE_AS_DEFAULT_IMPL)
+    .enable(USE_BASE_TYPE_AS_DEFAULT_IMPL)
     .build()
 
 fun apiV1RequestSerialize(request: IRequest): String = apiV1Mapper.writeValueAsString(request)
