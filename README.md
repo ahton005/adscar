@@ -75,7 +75,7 @@ AdsCar -- это площадка, на которой пользователи 
 6. [m1l7-kmp](m1l7-kmp) - Kotlin Multiplatform и интероперабельность с JVM, JS
 7. [m2l2-testing](m2l2-testing) - Тестирование проекта, TDD, MDD
 
-## Транспортные модели, API - в разработке
+## Транспортные модели, API
 
 1. [specs](specs) - описание API в форме OpenAPI-спецификаций
 2. [adsCar-api-v1-jackson](adsCar-api-v1-jackson) - Генерация первой версии транспортных моделей с Jackson
@@ -85,7 +85,7 @@ AdsCar -- это площадка, на которой пользователи 
 5. [adsCar-log-models](adsCar-log-models) - Генерация моделей логирования
 6. [adsCar-mappers-log](adsCar-mappers-log) - Мапер между внутренними моделями и моделями логирования
 
-## Фреймворки и транспорты - в разработке
+## Фреймворки и транспорты
 
 1. [adsCar-app-ktor](adscar-app-ktor) - Приложение на Ktor JVM
 2. [ads-car-app-kafka](ads-car-app-kafka) - Микросервис на Kafka
@@ -95,13 +95,14 @@ AdsCar -- это площадка, на которой пользователи 
 1. [deploy](deploy) - Инструменты мониторинга и деплоя
 2. [adsCar-logging](adsCar-logging) - Библиотека логирования на базе библиотеки Logback
 
-## Модули бизнес-логики - в разработке
+## Модули бизнес-логики
 
 1. [adsCar-stubs](adsCar-stubs) - Стабы для ответов сервиса
 2. [app-lib-cor](app-lib-cor) - Библиотека цепочки обязанностей для бизнес-логики
 3. [adsCar-business-logic](adsCar-business-logic) - Модуль бизнес-логики приложения
 
-## Хранение, репозитории, базы данных - в разработке
+## Хранение, репозитории, базы данных
 
 1. [app-repo-tests](app-repo-tests) - Базовые тесты для репозиториев всех баз данных
 2. [app-repo-in-memory](app-repo-in-memory) - Репозиторий на базе кэша в памяти для тестирования
+3. [app-repo-cassandra](app-repo-cassandra) - Репозиторий с NoSql DB Cassandra
