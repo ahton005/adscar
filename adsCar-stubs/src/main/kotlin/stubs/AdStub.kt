@@ -12,14 +12,16 @@ object AdStub {
 
     fun prepareResult(block: InnerAd.() -> Unit): InnerAd = get().apply(block)
 
-    fun prepareSearchList(filter: String) = listOf(
-        AD_CAR.copy(id = InnerAdId("1"), description = "ГАЗ"),
-        AD_CAR.copy(id = InnerAdId("2"), description = "ГАЗ"),
-        AD_CAR.copy(id = InnerAdId("3"), description = "ГАЗ"),
-        AD_CAR.copy(id = InnerAdId("4"), description = "ВАЗ"),
-        AD_CAR.copy(id = InnerAdId("5"), description = "ВАЗ"),
-        AD_CAR.copy(id = InnerAdId("6"), description = "ВАЗ")
-    ).filter { it.description.contains(filter, true) }
+    fun prepareSearchList(filter: String) = prepareList().filter { it.description.contains(filter, true) }
+
+    fun prepareList() = listOf(
+        AD_CAR.copy(id = InnerAdId("1"), description = "ГАЗ", title = "ГАЗ"),
+        AD_CAR.copy(id = InnerAdId("2"), description = "ГАЗ", title = "ГАЗ"),
+        AD_CAR.copy(id = InnerAdId("3"), description = "ГАЗ", title = "ГАЗ"),
+        AD_CAR.copy(id = InnerAdId("4"), description = "ВАЗ", title = "ВАЗ"),
+        AD_CAR.copy(id = InnerAdId("5"), description = "ВАЗ", title = "ВАЗ"),
+        AD_CAR.copy(id = InnerAdId("6"), description = "ВАЗ", title = "ВАЗ")
+    )
 }
 
 val AD_CAR: InnerAd

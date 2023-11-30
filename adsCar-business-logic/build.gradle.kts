@@ -2,12 +2,6 @@ plugins {
     kotlin("jvm")
 }
 
-kotlin {
-    sourceSets {
-        all { languageSettings.optIn("kotlin.RequiresOptIn") }
-    }
-}
-
 dependencies {
     val coroutinesVersion: String by project
 
@@ -15,6 +9,12 @@ dependencies {
     implementation(project(":adsCar-common"))
     implementation(project(":adsCar-stubs"))
     implementation(project(":app-lib-cor"))
+    implementation(project(":adsCar-logging"))
+
+    implementation(project(":app-repo-tests"))
+    implementation(project(":app-repo-stubs"))
+    implementation(project(":app-repo-in-memory"))
+
     testImplementation(kotlin("test-junit"))
     testImplementation(kotlin("test-common"))
     testImplementation(kotlin("test-annotations-common"))

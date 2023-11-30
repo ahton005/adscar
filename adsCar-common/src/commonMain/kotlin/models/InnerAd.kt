@@ -11,9 +11,14 @@ data class InnerAd(
     var logos: List<String> = listOf(),
     var ownerId: InnerUserId = InnerUserId.NONE,
     var price: BigDecimal = ZERO,
-    var permissionsClient: Set<InnerAdPermissionClient> = setOf()
+    var permissionsClient: Set<InnerAdPermissionClient> = setOf(),
+    var lock: InnerAdLock = InnerAdLock.NONE
 ) {
     fun deepCopy(): InnerAd = copy(
         permissionsClient = permissionsClient.toMutableSet()
     )
+
+    companion object {
+        val NONE get() = InnerAd()
+    }
 }
