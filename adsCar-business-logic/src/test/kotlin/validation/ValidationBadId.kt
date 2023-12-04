@@ -2,6 +2,7 @@ package validation
 
 import AdProcessor
 import InnerContext
+import addTestPrincipal
 import kotlinx.coroutines.test.runTest
 import models.InnerAd
 import models.InnerAdId
@@ -10,9 +11,12 @@ import models.InnerCommand
 import models.InnerState
 import models.InnerVisibility
 import models.InnerWorkMode
+import stubs.AdStub
 import kotlin.test.assertContains
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
+
+private val stub = AdStub.prepareResult { id = InnerAdId("123-234-abc-ABC") }
 
 fun validationIdCorrect(command: InnerCommand, processor: AdProcessor) = runTest {
     val ctx = InnerContext(
@@ -27,6 +31,7 @@ fun validationIdCorrect(command: InnerCommand, processor: AdProcessor) = runTest
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal(stub.ownerId)
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(InnerState.FAILING, ctx.state)
@@ -45,6 +50,7 @@ fun validationIdTrim(command: InnerCommand, processor: AdProcessor) = runTest {
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal(stub.ownerId)
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(InnerState.FAILING, ctx.state)
@@ -63,6 +69,7 @@ fun validationIdEmpty(command: InnerCommand, processor: AdProcessor) = runTest {
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal(stub.ownerId)
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(InnerState.FAILING, ctx.state)
@@ -84,6 +91,7 @@ fun validationIdFormat(command: InnerCommand, processor: AdProcessor) = runTest 
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal(stub.ownerId)
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(InnerState.FAILING, ctx.state)

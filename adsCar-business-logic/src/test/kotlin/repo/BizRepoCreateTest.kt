@@ -47,6 +47,7 @@ class BizRepoCreateTest {
                 visibility = InnerVisibility.VISIBLE_PUBLIC
             )
         )
+        ctx.addTestPrincipal()
         processor.exec(ctx)
         assertEquals(InnerState.FINISHING, ctx.state)
         assertNotEquals(InnerAdId.NONE, ctx.adResponse.id)

@@ -1,4 +1,3 @@
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import models.InnerAd
 import models.InnerAdFilter
@@ -40,7 +39,6 @@ class BizRepoSearchTest {
     }
     private val processor by lazy { AdProcessor(settings) }
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @Test
     fun repoSearchSuccessTest() = runTest {
         val ctx = InnerContext(
@@ -51,6 +49,7 @@ class BizRepoSearchTest {
                 searchString = "ab"
             )
         )
+        ctx.addTestPrincipal()
         processor.exec(ctx)
         assertEquals(InnerState.FINISHING, ctx.state)
         assertEquals(1, ctx.adsResponse.size)

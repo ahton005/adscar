@@ -1,5 +1,6 @@
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
+import helpers.addAuth
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.post
@@ -11,6 +12,7 @@ import io.ktor.server.testing.ApplicationTestBuilder
 import io.ktor.server.testing.testApplication
 import models.InnerAdId
 import models.InnerAdLock
+import models.InnerUserId
 import models.InnerVisibility
 import org.junit.Test
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdCreateOrUpdateObject
@@ -44,6 +46,7 @@ class V1AdInmemoryApiTest {
         description = "abc"
         visibility = InnerVisibility.VISIBLE_PUBLIC
         lock = InnerAdLock(uuidOld)
+        ownerId = InnerUserId("userTest")
     }
     private val initAdSupply = AdStub.prepareResult {
         id = InnerAdId(uuidSup)
@@ -74,6 +77,7 @@ class V1AdInmemoryApiTest {
                     mode = AdRequestDebugMode.TEST
                 )
             )
+            addAuth()
             contentType(ContentType.Application.Json)
             setBody(requestObj)
         }
@@ -101,6 +105,7 @@ class V1AdInmemoryApiTest {
                     mode = AdRequestDebugMode.TEST
                 )
             )
+            addAuth()
             contentType(ContentType.Application.Json)
             setBody(requestObj)
         }
@@ -133,6 +138,7 @@ class V1AdInmemoryApiTest {
                     mode = AdRequestDebugMode.TEST
                 )
             )
+            addAuth()
             contentType(ContentType.Application.Json)
             setBody(requestObj)
         }
@@ -163,6 +169,7 @@ class V1AdInmemoryApiTest {
                     mode = AdRequestDebugMode.TEST
                 )
             )
+            addAuth()
             contentType(ContentType.Application.Json)
             setBody(requestObj)
         }
@@ -187,6 +194,7 @@ class V1AdInmemoryApiTest {
                     mode = AdRequestDebugMode.TEST
                 )
             )
+            addAuth()
             contentType(ContentType.Application.Json)
             setBody(requestObj)
         }

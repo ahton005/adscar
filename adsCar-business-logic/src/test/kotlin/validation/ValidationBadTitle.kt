@@ -2,6 +2,7 @@ package validation
 
 import AdProcessor
 import InnerContext
+import addTestPrincipal
 import kotlinx.coroutines.test.runTest
 import models.InnerAd
 import models.InnerAdId
@@ -30,6 +31,7 @@ fun validationTitleCorrect(command: InnerCommand, processor: AdProcessor) = runT
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal(stub.ownerId)
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(InnerState.FAILING, ctx.state)
@@ -49,6 +51,7 @@ fun validationTitleTrim(command: InnerCommand, processor: AdProcessor) = runTest
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal(stub.ownerId)
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(InnerState.FAILING, ctx.state)
@@ -68,6 +71,7 @@ fun validationTitleEmpty(command: InnerCommand, processor: AdProcessor) = runTes
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal(stub.ownerId)
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(InnerState.FAILING, ctx.state)
@@ -89,6 +93,7 @@ fun validationTitleSymbols(command: InnerCommand, processor: AdProcessor) = runT
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal(stub.ownerId)
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(InnerState.FAILING, ctx.state)

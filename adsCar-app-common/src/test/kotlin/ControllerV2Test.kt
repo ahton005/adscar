@@ -1,4 +1,5 @@
 import kotlinx.coroutines.test.runTest
+import logging.MpLoggerProvider
 import mappers.v1.toInnerContext
 import mappers.v1.toTransport
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdCreateOrUpdateObject
@@ -30,6 +31,8 @@ class ControllerV2Test {
     private val appSettings: IAppSettings = object : IAppSettings {
         override val processor: AdProcessor = AdProcessor()
         override val corSettings: MkplCorSettings = MkplCorSettings()
+        override val logger: MpLoggerProvider = MpLoggerProvider()
+        override val auth: AuthConfig = AuthConfig.NONE
     }
 
     class TestApplicationCall(private val request: IRequest) {

@@ -4,6 +4,7 @@ import AdProcessor
 import AdRepositoryMock
 import InnerContext
 import MkplCorSettings
+import addTestPrincipal
 import kotlinx.coroutines.test.runTest
 import models.InnerAd
 import models.InnerAdId
@@ -55,6 +56,7 @@ fun repoNotFoundTest(command: InnerCommand) = runTest {
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(InnerState.FAILING, ctx.state)
     assertEquals(InnerAd(), ctx.adResponse)

@@ -1,6 +1,7 @@
 import helpers.errorAdministration
 import helpers.fail
 import models.InnerWorkMode
+import permissions.InnerUserGroups
 import repo.IAdRepository
 
 fun ICorChainDsl<InnerContext>.initRepo(title: String) = worker {
@@ -10,8 +11,8 @@ fun ICorChainDsl<InnerContext>.initRepo(title: String) = worker {
     """.trimIndent()
     handle {
         adRepo = when {
-            workMode == InnerWorkMode.TEST -> settings.repoTest
-            workMode == InnerWorkMode.STUB -> settings.repoStub
+            workMode == InnerWorkMode.TEST && principal.groups.contains(InnerUserGroups.TEST) -> settings.repoTest
+            workMode == InnerWorkMode.STUB && principal.groups.contains(InnerUserGroups.TEST) -> settings.repoStub
             else -> settings.repoProd
         }
         if (workMode != InnerWorkMode.STUB && adRepo == IAdRepository.NONE) fail(

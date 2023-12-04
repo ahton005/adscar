@@ -2,7 +2,7 @@ package validation
 
 import AdProcessor
 import InnerContext
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import addTestPrincipal
 import kotlinx.coroutines.test.runTest
 import models.InnerAd
 import models.InnerAdLock
@@ -17,7 +17,6 @@ import kotlin.test.assertNotEquals
 
 private val stub = AdStub.get()
 
-@OptIn(ExperimentalCoroutinesApi::class)
 fun validationDescriptionCorrect(command: InnerCommand, processor: AdProcessor) = runTest {
     val ctx = InnerContext(
         command = command,
@@ -31,6 +30,7 @@ fun validationDescriptionCorrect(command: InnerCommand, processor: AdProcessor) 
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal(stub.ownerId)
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(InnerState.FAILING, ctx.state)
@@ -50,6 +50,7 @@ fun validationDescriptionTrim(command: InnerCommand, processor: AdProcessor) = r
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal(stub.ownerId)
     processor.exec(ctx)
     assertEquals(0, ctx.errors.size)
     assertNotEquals(InnerState.FAILING, ctx.state)
@@ -69,6 +70,7 @@ fun validationDescriptionEmpty(command: InnerCommand, processor: AdProcessor) = 
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(InnerState.FAILING, ctx.state)
@@ -90,6 +92,7 @@ fun validationDescriptionSymbols(command: InnerCommand, processor: AdProcessor) 
             lock = InnerAdLock("123-234-abc-ABC")
         )
     )
+    ctx.addTestPrincipal()
     processor.exec(ctx)
     assertEquals(1, ctx.errors.size)
     assertEquals(InnerState.FAILING, ctx.state)

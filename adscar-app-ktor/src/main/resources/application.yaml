@@ -16,13 +16,18 @@ ktor:
     - "http://192.168.0.182:8080/"
 adsCar:
   repository:
-    test: inmemory
-    prod: inmemory
-#    prod: cassandra
+    test: "$DB_TEST:inmemory"
+    prod: "$DB_PROD:inmemory"
     cassandra:
-      host: localhost
-      keyspace: test_keyspace
-      pass: cassandra
-      port: 9042
-      user: cassandra
-      testing: true
+      host: "$CS_HOST:localhost"
+      port: "$CS_PORT:9042"
+      keyspace: "$CS_KEYSPACE:test_keyspace"
+      pass: "$CS_USER:cassandra"
+      user: "$CS_USER:cassandra"
+      testing: "$CS_TESTING:false"
+  jwt:
+    secret: "secret"
+    issuer: "OtusKotlin"
+    audience: "ad-users"
+    realm: "ads"
+    clientId: "otus-ads-service"

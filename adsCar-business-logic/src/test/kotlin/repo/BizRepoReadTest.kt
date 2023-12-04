@@ -49,6 +49,7 @@ class BizRepoReadTest {
                 id = InnerAdId("123")
             )
         )
+        ctx.addTestPrincipal()
         processor.exec(ctx)
         assertEquals(InnerState.FINISHING, ctx.state)
         assertEquals(initAd.id, ctx.adResponse.id)

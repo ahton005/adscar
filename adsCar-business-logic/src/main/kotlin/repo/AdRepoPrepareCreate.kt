@@ -6,6 +6,7 @@ fun ICorChainDsl<InnerContext>.repoPrepareCreate(title: String) = worker {
     on { state == InnerState.RUNNING }
     handle {
         adRepoRead = adValidated.deepCopy()
+        adRepoRead.ownerId = principal.id
         adRepoPrepare = adRepoRead
     }
 }
