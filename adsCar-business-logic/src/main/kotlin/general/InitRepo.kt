@@ -7,7 +7,7 @@ import repo.IAdRepository
 fun ICorChainDsl<InnerContext>.initRepo(title: String) = worker {
     this.title = title
     description = """
-        Вычисление основного рабочего репозитория в зависимости от зпрошенного режима работы        
+        Вычисление основного рабочего репозитория в зависимости от запрошенного режима работы        
     """.trimIndent()
     handle {
         adRepo = when {

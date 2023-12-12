@@ -21,8 +21,10 @@ suspend inline fun <reified Q : IRequest,
     clazz: KClass<*>,
     logId: String
 ) = appSettings.controllerHelper(
-    receive<IRequest>().toInnerContext().apply {
-        principal = this@processV1.request.call.principal<JWTPrincipal>().toModel()
+    {
+        receive<Q>().toInnerContext().apply {
+            principal = this@processV1.request.call.principal<JWTPrincipal>().toModel()
+        }
     },
     { respond(toTransport()) },
     clazz,

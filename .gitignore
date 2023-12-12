@@ -9,3 +9,4 @@ gradle-app.properties
 !gradle-wrapper.properties
 /.idea/
 
+/deploy/keycloak/hsperfdata_jboss

@@ -47,7 +47,7 @@ class ControllerV2Test {
 
     private suspend fun TestApplicationCall.createAdKtor(appSettings: IAppSettings) {
         val resp = appSettings.controllerHelper(
-            receive<AdCreateRequest>().toInnerContext(),
+            { receive<AdCreateRequest>().toInnerContext() },
             { toTransport() },
             this::class,
             "Ktor"
