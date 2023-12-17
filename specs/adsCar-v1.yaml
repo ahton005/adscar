@@ -404,7 +404,7 @@ components:
 
     AdLock:
       type: string
-      description: "Версия оптимистичной блокировки(Вообще не понятно что это)"
+      description: "Версия оптимистичной блокировки"
 
     UserId:
       type: string
@@ -418,7 +418,7 @@ components:
 
     AdRequestDebug:
       type: object
-      description: "Это запрос в режиме дебага?"
+      description: "Выбор режима запроса(прод, стаб, тест)"
       properties:
         mode:
           $ref: "#/components/schemas/AdRequestDebugMode"

@@ -1,5 +1,11 @@
+package repo
+
+import AdRepositoryMock
+import AppSettings
+import MkplCorSettings
 import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.SerializationFeature
+import helpers.addAuth
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.post
@@ -11,9 +17,8 @@ import io.ktor.server.testing.ApplicationTestBuilder
 import io.ktor.server.testing.testApplication
 import models.InnerAd
 import models.InnerAdLock
+import moduleJvm
 import org.junit.Test
-import repo.DbAdResponse
-import repo.DbAdsResponse
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdCreateOrUpdateObject
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdCreateRequest
 import ru.zyablov.otus.otuskotlin.adscar.api.v1.models.AdCreateResponse
@@ -69,6 +74,7 @@ class V1AdMockApiTest {
                     mode = AdRequestDebugMode.TEST
                 )
             )
+            addAuth()
             contentType(ContentType.Application.Json)
             setBody(requestObj)
         }
@@ -106,6 +112,7 @@ class V1AdMockApiTest {
                     mode = AdRequestDebugMode.TEST
                 )
             )
+            addAuth(id = "111")
             contentType(ContentType.Application.Json)
             setBody(requestObj)
         }
@@ -161,6 +168,7 @@ class V1AdMockApiTest {
                     mode = AdRequestDebugMode.TEST
                 )
             )
+            addAuth(id = "111")
             contentType(ContentType.Application.Json)
             setBody(requestObj)
         }
@@ -213,6 +221,7 @@ class V1AdMockApiTest {
                     mode = AdRequestDebugMode.TEST
                 )
             )
+            addAuth(id = "111")
             contentType(ContentType.Application.Json)
             setBody(requestObj)
         }
@@ -250,6 +259,7 @@ class V1AdMockApiTest {
                     mode = AdRequestDebugMode.TEST
                 )
             )
+            addAuth()
             contentType(ContentType.Application.Json)
             setBody(requestObj)
         }

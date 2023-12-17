@@ -6,6 +6,7 @@ import RepoAdCassandra
 import RepoAdCreateTest.Companion.initObjects
 import com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
 import com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT
+import helpers.addAuth
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.post
@@ -57,6 +58,7 @@ class V1AdCassandraApiTest {
                 adCreate = testAd,
                 debug = AdRequestDebug(mode = TEST)
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }
@@ -78,6 +80,7 @@ class V1AdCassandraApiTest {
                 adCreate = testAd,
                 debug = AdRequestDebug(mode = TEST)
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }.body<AdCreateResponse?>()
@@ -88,6 +91,7 @@ class V1AdCassandraApiTest {
                 adRead = AdReadObject(responseCreate?.ad?.id),
                 debug = AdRequestDebug(mode = TEST)
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }
@@ -109,6 +113,7 @@ class V1AdCassandraApiTest {
                 adCreate = testAd,
                 debug = AdRequestDebug(mode = TEST)
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }.body<AdCreateResponse?>()
@@ -122,6 +127,7 @@ class V1AdCassandraApiTest {
                 adUpdate = newTestAd,
                 debug = AdRequestDebug(mode = TEST)
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }
@@ -143,6 +149,7 @@ class V1AdCassandraApiTest {
                 adCreate = testAd,
                 debug = AdRequestDebug(mode = TEST)
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }.body<AdCreateResponse?>()
@@ -153,6 +160,7 @@ class V1AdCassandraApiTest {
                 adDelete = AdDeleteObject(responseCreate?.ad?.id, lock = "testLock"),
                 debug = AdRequestDebug(mode = TEST)
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }
@@ -174,6 +182,7 @@ class V1AdCassandraApiTest {
                     adCreate = it.toTransport(),
                     debug = AdRequestDebug(mode = TEST)
                 )
+                addAuth()
                 contentType(Json)
                 setBody(requestObj)
             }
@@ -185,6 +194,7 @@ class V1AdCassandraApiTest {
                 adFilter = AdSearchFilter("ВАЗ"),
                 debug = AdRequestDebug(mode = TEST)
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }

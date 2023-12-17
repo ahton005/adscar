@@ -62,6 +62,7 @@ class BizRepoUpdateTest {
             workMode = InnerWorkMode.TEST,
             adRequest = adToUpdate
         )
+        ctx.addTestPrincipal()
         processor.exec(ctx)
         assertEquals(InnerState.FINISHING, ctx.state)
         assertEquals(adToUpdate.id, ctx.adResponse.id)

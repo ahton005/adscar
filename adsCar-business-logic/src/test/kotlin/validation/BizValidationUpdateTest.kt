@@ -3,11 +3,9 @@ package validation
 import AdProcessor
 import AdRepoStub
 import MkplCorSettings
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import models.InnerCommand
 import kotlin.test.Test
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class BizValidationUpdateTest {
 
     private val command = InnerCommand.UPDATE

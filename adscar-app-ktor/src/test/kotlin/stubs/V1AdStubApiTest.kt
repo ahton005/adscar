@@ -4,6 +4,7 @@ import AppSettings
 import MkplCorSettings
 import com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
 import com.fasterxml.jackson.databind.SerializationFeature.INDENT_OUTPUT
+import helpers.addAuth
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.post
@@ -58,6 +59,7 @@ class V1AdStubApiTest {
                     stub = SUCCESS
                 )
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }
@@ -81,6 +83,7 @@ class V1AdStubApiTest {
                     stub = SUCCESS
                 )
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }
@@ -108,6 +111,7 @@ class V1AdStubApiTest {
                     stub = SUCCESS
                 )
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }
@@ -132,6 +136,7 @@ class V1AdStubApiTest {
                     stub = SUCCESS
                 )
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }
@@ -154,6 +159,7 @@ class V1AdStubApiTest {
                     stub = SUCCESS
                 )
             )
+            addAuth()
             contentType(Json)
             setBody(requestObj)
         }

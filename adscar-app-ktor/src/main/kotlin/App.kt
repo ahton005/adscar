@@ -1,3 +1,6 @@
+import AuthConfig.Companion.GROUPS_CLAIM
+import base.resolveAlgorithm
+import com.auth0.jwt.JWT
 import io.ktor.http.HttpMethod.Companion.Get
 import io.ktor.http.HttpMethod.Companion.Options
 import io.ktor.http.HttpMethod.Companion.Post
@@ -5,6 +8,12 @@ import io.ktor.serialization.jackson.jackson
 import io.ktor.server.application.Application
 import io.ktor.server.application.call
 import io.ktor.server.application.install
+import io.ktor.server.application.log
+import io.ktor.server.auth.Authentication
+import io.ktor.server.auth.authenticate
+import io.ktor.server.auth.jwt.JWTCredential
+import io.ktor.server.auth.jwt.JWTPrincipal
+import io.ktor.server.auth.jwt.jwt
 import io.ktor.server.cio.EngineMain
 import io.ktor.server.http.content.resources
 import io.ktor.server.http.content.static
@@ -36,6 +45,31 @@ fun Application.moduleJvm(appSettings: AppSettings = initAppSettings()) {
     install(DefaultHeaders)
     install(AutoHeadResponse)
     install(Routing)
+
+    install(Authentication) {
+        jwt("auth-jwt") {
+            val authConfig = appSettings.auth
+            realm = authConfig.realm
+
+            verifier {
+                val algorithm = it.resolveAlgorithm(authConfig)
+                JWT.require(algorithm)
+                    .withAudience(authConfig.audience)
+                    .withIssuer(authConfig.issuer)
+                    .build()
+            }
+            validate { jwtCredential: JWTCredential ->
+                when {
+                    jwtCredential.payload.getClaim(GROUPS_CLAIM).asList(String::class.java).isNullOrEmpty() -> {
+                        this@moduleJvm.log.error("Groups claim must not be empty in JWT token")
+                        null
+                    }
+
+                    else -> JWTPrincipal(jwtCredential.payload)
+                }
+            }
+        }
+    }
 
     install(CORS) {
         allowNonSimpleContentTypes = true
@@ -82,7 +116,9 @@ fun Application.moduleJvm(appSettings: AppSettings = initAppSettings()) {
                     setConfig(apiV1Mapper.deserializationConfig)
                 }
             }
-            v1Ad(appSettings)
+            authenticate("auth-jwt") {
+                v1Ad(appSettings)
+            }
         }
 
         swagger(appSettings)

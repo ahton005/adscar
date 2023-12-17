@@ -16,6 +16,8 @@ fun Application.initAppSettings(): AppSettings {
     return AppSettings(
         appUrls = environment.config.propertyOrNull("ktor.urls")?.getList() ?: emptyList(),
         processor = AdProcessor(corSettings),
-        corSettings = corSettings
+        corSettings = corSettings,
+        logger = getLoggerProviderConf(),
+        auth = initAppAuth()
     )
 }

@@ -11,6 +11,8 @@ dependencies {
     implementation(project(":app-lib-cor"))
     implementation(project(":adsCar-logging"))
 
+    implementation(project(":adsCar-auth"))
+
     implementation(project(":app-repo-tests"))
     implementation(project(":app-repo-stubs"))
     implementation(project(":app-repo-in-memory"))

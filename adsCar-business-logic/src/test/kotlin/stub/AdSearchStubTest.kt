@@ -2,7 +2,6 @@ package stub
 
 import AdProcessor
 import InnerContext
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import models.InnerAd
 import models.InnerAdFilter
@@ -16,7 +15,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import kotlin.test.fail
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class AdSearchStubTest {
 
     private val processor = AdProcessor()

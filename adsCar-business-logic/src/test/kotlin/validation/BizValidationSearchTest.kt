@@ -4,7 +4,7 @@ import AdProcessor
 import AdRepoStub
 import InnerContext
 import MkplCorSettings
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import addTestPrincipal
 import kotlinx.coroutines.test.runTest
 import models.InnerAdFilter
 import models.InnerCommand
@@ -14,7 +14,6 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class BizValidationSearchTest {
 
     private val command = InnerCommand.SEARCH
@@ -33,6 +32,7 @@ class BizValidationSearchTest {
             workMode = InnerWorkMode.TEST,
             adFilterRequest = InnerAdFilter()
         )
+        ctx.addTestPrincipal()
         processor.exec(ctx)
         assertEquals(0, ctx.errors.size)
         assertNotEquals(InnerState.FAILING, ctx.state)

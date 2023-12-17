@@ -33,5 +33,5 @@ val AD_CAR: InnerAd
         logos = listOf("Картинка 1, Картинка 2"),
         ownerId = InnerUserId("111"),
         price = BigDecimal("100000"),
-        permissionsClient = InnerAdPermissionClient.values().toSet()
+        permissionsClient = InnerAdPermissionClient.values().toMutableSet()
     )

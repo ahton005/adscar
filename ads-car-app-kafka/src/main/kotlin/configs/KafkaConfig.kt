@@ -1,8 +1,10 @@
 package configs
 
 import AdProcessor
+import AuthConfig
 import IAppSettings
 import MkplCorSettings
+import logging.MpLoggerProvider
 
 private const val KAFKA_HOST_VAR = "KAFKA_HOSTS"
 private const val KAFKA_TOPIC_IN_V1_VAR = "KAFKA_TOPIC_IN_V1"
@@ -20,4 +22,6 @@ object KafkaConfig : IAppSettings {
     val kafkaTopicOutV2: String = System.getenv(KAFKA_TOPIC_OUT_V2_VAR) ?: "marketplace-out-v2"
     override val corSettings: MkplCorSettings = MkplCorSettings()
     override val processor: AdProcessor = AdProcessor(corSettings)
+    override val logger: MpLoggerProvider = MpLoggerProvider()
+    override val auth: AuthConfig = AuthConfig.NONE
 }

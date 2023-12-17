@@ -1,5 +1,6 @@
 package models
 
+import permissions.InnerPrincipalRelations
 import java.math.BigDecimal
 import java.math.BigDecimal.ZERO
 
@@ -11,8 +12,9 @@ data class InnerAd(
     var logos: List<String> = listOf(),
     var ownerId: InnerUserId = InnerUserId.NONE,
     var price: BigDecimal = ZERO,
-    var permissionsClient: Set<InnerAdPermissionClient> = setOf(),
-    var lock: InnerAdLock = InnerAdLock.NONE
+    var permissionsClient: MutableSet<InnerAdPermissionClient> = mutableSetOf(),
+    var lock: InnerAdLock = InnerAdLock.NONE,
+    var relations: Set<InnerPrincipalRelations> = emptySet()
 ) {
     fun deepCopy(): InnerAd = copy(
         permissionsClient = permissionsClient.toMutableSet()

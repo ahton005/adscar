@@ -1,8 +1,11 @@
 package plugins // ktlint-disable filename
 
 import IAppSettings
+import base.toModel
 import controllerHelper
 import io.ktor.server.application.ApplicationCall
+import io.ktor.server.auth.jwt.JWTPrincipal
+import io.ktor.server.auth.principal
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import mappers.v1.toInnerContext
@@ -18,8 +21,22 @@ suspend inline fun <reified Q : IRequest,
     clazz: KClass<*>,
     logId: String
 ) = appSettings.controllerHelper(
-    receive<IRequest>().toInnerContext(),
+    {
+        receive<Q>().toInnerContext().apply {
+            principal = this@processV1.request.call.principal<JWTPrincipal>().toModel()
+        }
+    },
     { respond(toTransport()) },
     clazz,
     logId
 )
+
+// Костыль для решения проблемы отсутствия jwt в native
+// @Suppress("UnusedReceiverParameter", "UNUSED_PARAMETER")
+// fun ApplicationCall.mkplPrincipal(appSettings: MkplAppSettings): MkplPrincipalModel = MkplPrincipalModel(
+//    id = MkplUserId("user-1"),
+//    fname = "Ivan",
+//    mname = "Ivanovich",
+//    lname = "Ivanov",
+//    groups = setOf(MkplUserGroups.TEST, MkplUserGroups.USER),
+// )

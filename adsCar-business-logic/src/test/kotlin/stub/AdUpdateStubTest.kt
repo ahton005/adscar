@@ -2,7 +2,6 @@ package stub
 
 import AdProcessor
 import InnerContext
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import models.InnerAd
 import models.InnerAdId
@@ -14,7 +13,6 @@ import stubs.InnerStubs
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class AdUpdateStubTest {
 
     private val processor = AdProcessor()

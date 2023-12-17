@@ -1,4 +1,4 @@
-package plugins // ktlint-disable filename
+package plugins
 
 import io.ktor.server.application.Application
 import logging.MpLoggerProvider

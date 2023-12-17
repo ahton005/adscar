@@ -6,6 +6,8 @@ import models.InnerError
 import models.InnerRequestId
 import models.InnerState
 import models.InnerWorkMode
+import permissions.InnerPrincipalModel
+import permissions.InnerUserPermissions
 import repo.IAdRepository
 import stubs.InnerStubs
 
@@ -35,6 +37,9 @@ data class InnerContext(
     var adRepoRead: InnerAd = InnerAd(), // То, что прочитали из репозитория
     var adRepoPrepare: InnerAd = InnerAd(), // То, что готовим для сохранения в БД
     var adRepoDone: InnerAd = InnerAd(), // Результат, полученный из БД
-    var adsRepoDone: MutableList<InnerAd> = mutableListOf() // Результат, полученный из БД
+    var adsRepoDone: MutableList<InnerAd> = mutableListOf(), // Результат, полученный из БД
 
+    var principal: InnerPrincipalModel = InnerPrincipalModel.NONE,
+    val permissionsChain: MutableSet<InnerUserPermissions> = mutableSetOf(),
+    var permitted: Boolean = false
 )

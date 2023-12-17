@@ -54,6 +54,7 @@ class BizRepoDeleteTest {
             workMode = InnerWorkMode.TEST,
             adRequest = adToUpdate
         )
+        ctx.addTestPrincipal()
         processor.exec(ctx)
         assertEquals(InnerState.FINISHING, ctx.state)
         assertTrue { ctx.errors.isEmpty() }

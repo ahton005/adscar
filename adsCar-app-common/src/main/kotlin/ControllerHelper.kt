@@ -4,15 +4,17 @@ import models.InnerState.FAILING
 import kotlin.reflect.KClass
 
 suspend inline fun <T> IAppSettings.controllerHelper(
-    ctx: InnerContext,
+    crossinline getReq: suspend () -> InnerContext,
     crossinline toResponse: suspend InnerContext.() -> T,
     clazz: KClass<*>,
     logId: String
 ): T {
     val logger = corSettings.loggerProvider.logger(clazz)
+    var ctx = InnerContext(timeStart = now())
     return try {
         logger.doWithLogging(logId) {
-            processor.exec(ctx.apply { timeStart = now() })
+            ctx = getReq().copy(timeStart = now())
+            processor.exec(ctx)
             logger.info(
                 msg = "Req $logId processed for ${clazz.simpleName}",
                 marker = "BIZ",

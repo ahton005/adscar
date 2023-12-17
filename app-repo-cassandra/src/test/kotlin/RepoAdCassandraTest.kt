@@ -78,7 +78,7 @@ class RepoAdCassandraUpdateTest : RepoAdUpdateTest() {
 class TestCasandraContainer : CassandraContainer<TestCasandraContainer>("cassandra:3.11.2")
 
 object TestCompanion {
-    private val container = TestCasandraContainer().withStartupTimeout(Duration.ofSeconds(300L))
+    private val container = TestCasandraContainer().withStartupTimeout(Duration.ofSeconds(400L))
         .also { it.start() }
 
     fun repository(initObjects: List<InnerAd>, keyspace: String, lock: InnerAdLock): RepoAdCassandra {
